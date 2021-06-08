@@ -1,0 +1,76 @@
+methratio.py --chr=chr2 -d chr2_arab.fasta -i no-action -o chr2Col0meth.txt Col-0_sorted_marked.bam
+methratio.py --chr=chr2 -d chr2_arab.fasta -i no-action -o chr2CYS1meth.txt CYS1_sorted_marked.bam
+methratio.py --chr=chr3 -d chr3_arab.fasta -i no-action -o chr3Col0meth.txt Col-0_sorted_marked.bam
+methratio.py --chr=chr3 -d chr3_arab.fasta -i no-action -o chr3CYS1meth.txt CYS1_sorted_marked.bam
+methratio.py --chr=chr4 -d chr4_arab.fasta -i no-action -o chr4Col0meth.txt Col-0_sorted_marked.bam
+methratio.py --chr=chr4 -d chr4_arab.fasta -i no-action -o chr4CYS1meth.txt CYS1_sorted_marked.bam
+methratio.py --chr=chr5 -d chr5_arab.fasta -i no-action -o chr5Col0meth.txt Col-0_sorted_marked.bam
+methratio.py --chr=chr5 -d chr5_arab.fasta -i no-action -o chr5CYS1meth.txt CYS1_sorted_marked.bam
+awk '($4=="CG")'  chr2Col0meth.txt > chr2Col0_CG.txt
+awk '($4=="CHG")' chr2Col0meth.txt > chr2Col0_CHG.txt
+awk '($4=="CHH")' chr2Col0meth.txt > chr2Col0_CHH.txt
+awk '($4=="CG")'  chr3Col0meth.txt > chr3Col0_CG.txt
+awk '($4=="CHG")' chr3Col0meth.txt > chr3Col0_CHG.txt
+awk '($4=="CHH")' chr3Col0meth.txt > chr3Col0_CHH.txt
+awk '($4=="CG")'  chr4Col0meth.txt > chr4Col0_CG.txt
+awk '($4=="CHG")' chr4Col0meth.txt > chr4Col0_CHG.txt
+awk '($4=="CHH")' chr4Col0meth.txt > chr4Col0_CHH.txt
+awk '($4=="CG")'  chr5Col0meth.txt > chr5Col0_CG.txt
+awk '($4=="CHG")' chr5Col0meth.txt > chr5Col0_CHG.txt
+awk '($4=="CHH")' chr5Col0meth.txt > chr5Col0_CHH.txt
+awk '($4=="CG")'  chr2CYS1meth.txt > chr2CYS1_CG.txt
+awk '($4=="CHG")' chr2CYS1meth.txt > chr2CYS1_CHG.txt
+awk '($4=="CHH")' chr2CYS1meth.txt > chr2CYS1_CHH.txt
+awk '($4=="CG")'  chr3CYS1meth.txt > chr3CYS1_CG.txt
+awk '($4=="CHG")' chr3CYS1meth.txt > chr3CYS1_CHG.txt
+awk '($4=="CHH")' chr3CYS1meth.txt > chr3CYS1_CHHH.txt
+awk '($4=="CG")'  chr4CYS1meth.txt > chr4CYS1_CHH_CHG.txt
+awk '($4=="CHG")' chr4CYS1meth.txt > chr4CYS1_CpG.txt
+awk '($4=="CHH")' chr4CYS1meth.txt > chr4CYS1_CHH_CHG.txt
+awk '($4=="CG")'  chr5CYS1meth.txt > chr5CYS1_CHH_CHG.txt
+awk '($4=="CHG")' chr5CYS1meth.txt > chr5CYS1_CpG.txt
+awk '($4=="CHH")' chr5CYS1meth.txt > chr5CYS1_CHH_CHG.txt
+R
+setwd("C:/PATH/TO/CG")
+library(methylKit)
+library(genomation)
+#ファイル読み込み
+file.list=list("Col0_CHG.txt","CYS1_CHG.txt")
+#methRead
+myobj=methRead(file.list,
+sample.id=list("Col0_CHG","CYS1_CHG"),
+assembly="tair10",
+treatment=c(1,0),
+context="CHH",
+pipeline=list(fraction=TRUE,chr.col=1,start.col=2,end.col=2,coverage.col=6,strand.col=3,freqC.col=5)
+)
+
+#メチル化率、カバレッジ描画
+pdf("CLL_coverage.pdf")
+getMethylationStats(myobj[[1]], plot=T)
+getMethylationStats(myobj[[2]], plot=T)
+getCoverageStats(myobj[[1]], plot=T)
+getCoverageStats(myobj[[2]], plot=T)
+dev.off()
+#unite
+meth=unite(myobj,destrand=F)
+#DMR
+diff=calculateDiffMeth(meth)
+diffchr1CHH_hyper=getMethylDiff(diff,difference=25,qvalue=0.01,type="hyper")
+diffchr1CHH_hypo=getMethylDiff(diff,difference=25,qvalue=0.01,type="hypo")
+#annotation
+gene.obj=readTranscriptFeatures("arabidopsis_WG.bed")
+annotateWithGeneParts(as(diffchr1CHH_hyper,"GRanges"),gene.obj)
+annotateWithGeneParts(as(diffchr1CHH_hypo,"GRanges"),gene.obj)
+#sort
+o1=order(-diffchr1CHH_hyper$meth.diff)
+o2=order(-diffchr1CHH_hypo$meth.diff)
+a1=annotateWithGeneParts(as(diffchr1CHH_hyper[o1,],"GRanges"),gene.obj)
+a2=annotateWithGeneParts(as(diffchr1CHH_hypo[o2,],"GRanges"),gene.obj)
+f1=abs(a1@dist.to.TSS$dist.to.feature) <= 1000
+f2=abs(a2@dist.to.TSS$dist.to.feature) <= 1000
+diffchr1CHH_hyper_TSS1000=a1@dist.to.TSS[f1,]
+diffchr1CHH_hypo_TSS1000=a1@dist.to.TSS[f2,]
+write.csv(diffchr1CHH_hyper_TSS1000,"chr1_CHH_hyper.csv",quote=F)
+write.csv(diffchr1CHH_hypo_TSS1000,"chr1_CHH_hypo.csv",quote=F)
+save.image("F:\\Col0_vs_CYS1_WGBS\\Chr1\\CHH\\chr1_CHH.RData")
