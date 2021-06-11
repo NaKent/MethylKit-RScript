@@ -6,30 +6,69 @@ methratio.py --chr=chr4 -d chr4_arab.fasta -i no-action -o chr4Col0meth.txt Col-
 methratio.py --chr=chr4 -d chr4_arab.fasta -i no-action -o chr4CYS1meth.txt CYS1_sorted_marked.bam
 methratio.py --chr=chr5 -d chr5_arab.fasta -i no-action -o chr5Col0meth.txt Col-0_sorted_marked.bam
 methratio.py --chr=chr5 -d chr5_arab.fasta -i no-action -o chr5CYS1meth.txt CYS1_sorted_marked.bam
-awk '($4=="CG")'  chr2Col0meth.txt > chr2Col0_CG.txt
-awk '($4=="CHG")' chr2Col0meth.txt > chr2Col0_CHG.txt
-awk '($4=="CHH")' chr2Col0meth.txt > chr2Col0_CHH.txt
-awk '($4=="CG")'  chr3Col0meth.txt > chr3Col0_CG.txt
-awk '($4=="CHG")' chr3Col0meth.txt > chr3Col0_CHG.txt
-awk '($4=="CHH")' chr3Col0meth.txt > chr3Col0_CHH.txt
-awk '($4=="CG")'  chr4Col0meth.txt > chr4Col0_CG.txt
-awk '($4=="CHG")' chr4Col0meth.txt > chr4Col0_CHG.txt
-awk '($4=="CHH")' chr4Col0meth.txt > chr4Col0_CHH.txt
-awk '($4=="CG")'  chr5Col0meth.txt > chr5Col0_CG.txt
-awk '($4=="CHG")' chr5Col0meth.txt > chr5Col0_CHG.txt
-awk '($4=="CHH")' chr5Col0meth.txt > chr5Col0_CHH.txt
-awk '($4=="CG")'  chr2CYS1meth.txt > chr2CYS1_CG.txt
-awk '($4=="CHG")' chr2CYS1meth.txt > chr2CYS1_CHG.txt
-awk '($4=="CHH")' chr2CYS1meth.txt > chr2CYS1_CHH.txt
-awk '($4=="CG")'  chr3CYS1meth.txt > chr3CYS1_CG.txt
-awk '($4=="CHG")' chr3CYS1meth.txt > chr3CYS1_CHG.txt
-awk '($4=="CHH")' chr3CYS1meth.txt > chr3CYS1_CHHH.txt
-awk '($4=="CG")'  chr4CYS1meth.txt > chr4CYS1_CHH_CHG.txt
-awk '($4=="CHG")' chr4CYS1meth.txt > chr4CYS1_CpG.txt
-awk '($4=="CHH")' chr4CYS1meth.txt > chr4CYS1_CHH_CHG.txt
-awk '($4=="CG")'  chr5CYS1meth.txt > chr5CYS1_CHH_CHG.txt
-awk '($4=="CHG")' chr5CYS1meth.txt > chr5CYS1_CpG.txt
-awk '($4=="CHH")' chr5CYS1meth.txt > chr5CYS1_CHH_CHG.txt
+awk '($1=="chr1")'  Col-0methratio.txt > chr1Col0.txt
+awk '($1=="chr1")'  CYS1methratio.txt > chr1CYS1.txt
+awk '($1=="chr1")'  CYS2methratio.txt > chr1CYS2.txt
+awk '($1=="chr2")'  Col-0methratio.txt > chr2Col0.txt
+awk '($1=="chr2")'  CYS1methratio.txt > chr2CYS1.txt
+awk '($1=="chr2")'  CYS2methratio.txt > chr2CYS2.txt
+awk '($1=="chr3")'  Col-0methratio.txt > chr3Col0.txt
+awk '($1=="chr3")'  CYS1methratio.txt > chr3CYS1.txt
+awk '($1=="chr3")'  CYS2methratio.txt > chr3CYS2.txt
+awk '($1=="chr4")'  Col-0methratio.txt > chr4Col0.txt
+awk '($1=="chr4")'  CYS1methratio.txt > chr4CYS1.txt
+awk '($1=="chr4")'  CYS2methratio.txt > chr4CYS2.txt
+awk '($1=="chr5")'  Col-0methratio.txt > chr5Col0.txt
+awk '($1=="chr5")'  CYS1methratio.txt > chr5CYS1.txt
+awk '($1=="chr5")'  CYS2methratio.txt > chr5CYS2.txt
+
+
+awk '($4=="CG")'  chr1Col0.txt > chr1Col0_CG.txt
+awk '($4=="CHG")' chr1Col0.txt > chr1Col0_CHG.txt
+awk '($4=="CHH")' chr1Col0.txt > chr1Col0_CHH.txt
+awk '($4=="CG")'  chr2Col0.txt > chr2Col0_CG.txt
+awk '($4=="CHG")' chr2Col0.txt > chr2Col0_CHG.txt
+awk '($4=="CHH")' chr2Col0.txt > chr2Col0_CHH.txt
+awk '($4=="CG")'  chr3Col0.txt > chr3Col0_CG.txt
+awk '($4=="CHG")' chr3Col0.txt > chr3Col0_CHG.txt
+awk '($4=="CHH")' chr3Col0.txt > chr3Col0_CHH.txt
+awk '($4=="CG")'  chr4Col0.txt > chr4Col0_CG.txt
+awk '($4=="CHG")' chr4Col0.txt > chr4Col0_CHG.txt
+awk '($4=="CHH")' chr4Col0.txt > chr4Col0_CHH.txt
+awk '($4=="CG")'  chr5Col0.txt > chr5Col0_CG.txt
+awk '($4=="CHG")' chr5Col0.txt > chr5Col0_CHG.txt
+awk '($4=="CHH")' chr5Col0.txt > chr5Col0_CHH.txt
+awk '($4=="CG")'  chr1CYS1.txt > chr1CYS1_CG.txt
+awk '($4=="CHG")' chr1CYS1.txt > chr1CYS1_CHG.txt
+awk '($4=="CHH")' chr1CYS1.txt > chr1CYS1_CHH.txt
+awk '($4=="CG")'  chr2CYS1.txt > chr2CYS1_CG.txt
+awk '($4=="CHG")' chr2CYS1.txt > chr2CYS1_CHG.txt
+awk '($4=="CHH")' chr2CYS1.txt > chr2CYS1_CHH.txt
+awk '($4=="CG")'  chr3CYS1.txt > chr3CYS1_CG.txt
+awk '($4=="CHG")' chr3CYS1.txt > chr3CYS1_CHG.txt
+awk '($4=="CHH")' chr3CYS1.txt > chr3CYS1_CHH.txt
+awk '($4=="CG")'  chr4CYS1.txt > chr4CYS1_CG.txt
+awk '($4=="CHG")' chr4CYS1.txt > chr4CYS1_CHG.txt
+awk '($4=="CHH")' chr4CYS1.txt > chr4CYS1_CHH.txt
+awk '($4=="CG")'  chr5CYS1.txt > chr5CYS1_CG.txt
+awk '($4=="CHG")' chr5CYS1.txt > chr5CYS1_CHG.txt
+awk '($4=="CHH")' chr5CYS1.txt > chr5CYS1_CHH.txt
+awk '($4=="CG")'  chr1CYS2.txt > chr1CYS2_CG.txt
+awk '($4=="CHG")' chr1CYS2.txt > chr1CYS2_CHG.txt
+awk '($4=="CHH")' chr1CYS2.txt > chr1CYS2_CHH.txt
+awk '($4=="CG")'  chr2CYS2.txt > chr2CYS2_CG.txt
+awk '($4=="CHG")' chr2CYS2.txt > chr2CYS2_CHG.txt
+awk '($4=="CHH")' chr2CYS2.txt > chr2CYS2_CHH.txt
+awk '($4=="CG")'  chr3CYS2.txt > chr3CYS2_CG.txt
+awk '($4=="CHG")' chr3CYS2.txt > chr3CYS2_CHG.txt
+awk '($4=="CHH")' chr3CYS2.txt > chr3CYS2_CHH.txt
+awk '($4=="CG")'  chr4CYS2.txt > chr4CYS2_CG.txt
+awk '($4=="CHG")' chr4CYS2.txt > chr4CYS2_CHG.txt
+awk '($4=="CHH")' chr4CYS2.txt > chr4CYS2_CHH.txt
+awk '($4=="CG")'  chr5CYS2.txt > chr5CYS2_CG.txt
+awk '($4=="CHG")' chr5CYS2.txt > chr5CYS2_CHG.txt
+awk '($4=="CHH")' chr5CYS2.txt > chr5CYS2_CHH.txt
+
 R
 setwd("C:/PATH/TO/CG")
 library(methylKit)
